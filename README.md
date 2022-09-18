@@ -7,6 +7,12 @@ The **toolbox-shortcuts** utility maps any executables from a toolbox container 
 More informations about toolbox [here](https://github.com/containers/toolbox).
 
 
+## 🔀 Use cases
+
+* I created a action in my file manager that uses a ImageMagick scripts installed in my container. Using toolbox-shortcuts, can i just create a symlink to `convert` executable and all goes works normally.
+
+* My IDE - which is installed on the host - requires a `javac` (java compiler) executable in my `$PATH`. In the same way, I can create a symlink with toolbox-shortcuts to provides a `javac` symlink executable in my host system.
+
 ## 🔨 Installation
 
 Clone this repository to new folder in `~/.local/opt`:
@@ -50,6 +56,28 @@ Shortcut created: java [ ⬢ container3 ]
 
 Now you can run the `code`, `node`, `yarn`, and `java` from the **host** or from the **container1**, **container2**, or **container3**.
 
+### Package managers
+
+Package managers like `dnf`, `yum`, `apt`, `apt-get`, `pacman`, `zypper`, also works with symlinks. 
+
+For example, to install `php-cli` from host using `dnf`:
+```
+$ toolbox-shortcuts create ~/.local/bin/dnf containername
+Shortcut created: dnf [ ⬢ containername ]
+
+$ dnf update
+...
+
+$ dnf install php-cli
+...
+
+$ toolbox-shortcuts create ~/.local/bin/php containername
+Shortcut created: php [ ⬢ containername ]
+
+$ php -v
+...
+```
+
 ## 📚 How to works
 
 Considering the previous scenario, the symlinks were created in `~/.local/bin`:
@@ -79,27 +107,9 @@ $ ls -l ~/.local/opt/toolbox-shortcuts/containers
 
 ### sudo
 
-Does not work with any symlink created by **toolbox-shortcuts** from the  **host**, because the container was created at user level, and *sudo* starts running in at root level.
+Executing from `host`, does not work with any symlink created by **toolbox-shortcuts**.
 
-However, package managers can run without sudo; `dnf`, `yum`, `apt`, `apt-get`, `pacman`, and `zypper`. The **toolbox-shortcut-handler** script has a special handle on package managers.
-
-For example, to install `php` command line utility with `dnf` from **host**:
-```
-$ toolbox-shortcuts create ~/.local/bin/dnf containername
-Shortcut created: dnf [ ⬢ containername ]
-
-$ dnf update
-...
-
-$ dnf install php-cli
-...
-
-$ toolbox-shortcuts create ~/.local/bin/php containername
-Shortcut created: php [ ⬢ containername ]
-
-$ php -v
-...
-```
+However, package managers can run without sudo. The **toolbox-shortcut-handler** script has a special handle to the package managers.
 
 ### Installation path
 
