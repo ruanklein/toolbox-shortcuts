@@ -12,7 +12,7 @@ More informations about toolbox [here](https://github.com/containers/toolbox).
 Clone this repository to new folder in `~/.local/opt`:
 
 ```
-$ git clone https://github.com/RuanKlein/toolbox-shortcuts.git ~/.local/opt
+$ git clone https://github.com/RuanKlein/toolbox-shortcuts.git ~/.local/opt/toolbox-shortcuts
 ```
 
 Assuming the `~/.local/bin` folder is in your `$PATH`, create symlink to cli utility:
