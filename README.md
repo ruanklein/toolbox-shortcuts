@@ -77,7 +77,9 @@ $ ls -l ~/.local/opt/toolbox-shortcuts/containers
 
 ## ❗ Limitations
 
-**sudo**: does not work with any symlink created by **toolbox-shortcuts** from the  **host**, because the container was created at user level, and *sudo* starts running in at root level.
+### sudo
+
+Does not work with any symlink created by **toolbox-shortcuts** from the  **host**, because the container was created at user level, and *sudo* starts running in at root level.
 
 However, package managers can run without sudo; `dnf`, `yum`, `apt`, `apt-get`, `pacman`, and `zypper`. The **toolbox-shortcut-handler** script has a special handle on package managers.
 
@@ -98,3 +100,7 @@ Shortcut created: php [ ⬢ containername ]
 $ php -v
 ...
 ```
+
+### Installation path
+
+Can only install in user folder, due to the functioning of the toolbox, which only shares the home folder.
