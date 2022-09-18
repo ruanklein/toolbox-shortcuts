@@ -1,12 +1,12 @@
 # 📦 toolbox-shortcuts
 
-* [Introduction](#introduction)
-* [Use cases](#use-cases)
-* [Installation](#installation)
-* [How to use](#how-to-use)
+* [Introduction](#-introduction)
+* [Use cases](#-use-cases)
+* [Installation](#-installation)
+* [How to use](#-how-to-use)
     * [Package Manager](#package-managers)
-* [How to works](#how-to-works)
-* [Limitations](#limitations)
+* [How to works](#-how-to-works)
+* [Limitations](#-limitations)
     * [sudo](#sudo)
     * [Installation path](#installation-path)
 
