@@ -1,5 +1,15 @@
 # 📦 toolbox-shortcuts
 
+* [Introduction](#introduction)
+* [Use cases](#use-cases)
+* [Installation](#installation)
+* [How to use](#how-to-use)
+    * [Package Manager](#package-managers)
+* [How to works](#how-to-works)
+* [Limitations](#limitations)
+    * [sudo](#sudo)
+    * [Installation path](#installation-path)
+
 ## 📝 Introduction
 
 The **toolbox-shortcuts** utility maps any executables from a toolbox container to the host and other containers, using symlinks. This helps maintain compatibility with host resources with executables in a container.
