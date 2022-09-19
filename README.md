@@ -68,7 +68,7 @@ Now you can run the `code`, `node`, `yarn`, and `java` from the **host** or from
 
 ### Package managers
 
-Package managers like `dnf`, `yum`, `apt`, `apt-get`, `pacman`, `zypper`, also works with symlinks. 
+Package managers like `dnf`, `yum`, `apt`, `apt-get`, `pacman`, `zypper`, `rpm`, `dpkg` also works with symlinks. 
 
 For example, to install `php-cli` from host using `dnf`:
 ```
