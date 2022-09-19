@@ -21,7 +21,7 @@ run_as_native() {
 }
 
 run_as_container() {
-  local pkgmanagers=("dnf" "yum" "apt" "apt-get" "pacman" "zypper")
+  local pkgmanagers=("dnf" "yum" "apt" "apt-get" "pacman" "zypper" "rpm" "dpkg")
   local sudo=
 
   # sudo is only enabled for package manager
