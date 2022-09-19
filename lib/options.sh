@@ -1,7 +1,7 @@
 # CLI options
 
 help() {
-  echo -e "Usage: toolbox-shortcuts create /path/to/binary_name container_name"
+  echo -e "Usage: toolbox-shortcuts create /path/to/executable_name container_name"
   exit 0
 }
 
@@ -16,7 +16,7 @@ create() {
     || perror "creating symlink to handler failed"
 
   ln -sf "${applicationroot}/containers/${containername}" "$biname" \
-    || perror "creating symlink to binary name failed"
+    || perror "creating symlink to executable name failed"
 
   echo "Shortcut created: $(basename $biname) [ ⬢ $containername ]"
 }
