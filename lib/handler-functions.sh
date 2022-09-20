@@ -2,11 +2,6 @@
 
 source "${applicationroot}/lib/helpers.sh"
 
-get_container_info() {
-  source /run/.containerenv
-  eval echo \$${1}
-}
-
 run_as_native() {
   IFS=:
   for binpath in $PATH; do
