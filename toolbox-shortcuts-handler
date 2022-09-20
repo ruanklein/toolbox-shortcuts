@@ -21,8 +21,8 @@
 
 applicationroot="$(dirname "$(readlink -f "$0")")"
 
-source "${applicationroot}/lib/handler-functions.sh"
 source "${applicationroot}/lib/helpers.sh"
+source "${applicationroot}/lib/handler-functions.sh"
 
 biname="$(basename "$0")"
 containername="$(basename "$(readlink "$0")")"
