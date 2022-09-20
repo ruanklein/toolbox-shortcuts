@@ -22,14 +22,19 @@
 applicationroot="$(dirname "$(readlink -f "$0")")"
 
 source "${applicationroot}/lib/handler-functions.sh"
+source "${applicationroot}/lib/helpers.sh"
 
 biname="$(basename "$0")"
 containername="$(basename "$(readlink "$0")")"
 exec=run_as_container
 
-[[ -f /run/.containerenv  ]] && {
-    runningcontainer=$(get_container_info name)
+if is_container; then
+    runningcontainer="$(get_container_info name)"
     [[ "$runningcontainer" == "$containername" ]] && exec=run_as_native
-}
+fi
+
+if [[ "$exec" == "run_as_container" ]]; then
+  check_dep toolbox || perror "toolbox not found"
+fi
 
 $exec $*

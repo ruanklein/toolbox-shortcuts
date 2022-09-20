@@ -24,6 +24,8 @@ applicationroot="$(dirname "$(readlink -f "$0")")"
 source "${applicationroot}/lib/options.sh"
 source "${applicationroot}/lib/helpers.sh"
 
+check_dep podman || perror "podman not found $(is_container && echo -n "(you're in ⬢ $(get_container_info name))")"
+
 options=("create" "help")
 exec=$(get_option "$1" ${options[*]})
 
