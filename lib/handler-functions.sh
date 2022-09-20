@@ -1,7 +1,5 @@
 # Handler functions
 
-source "${applicationroot}/lib/helpers.sh"
-
 run_as_native() {
   IFS=:
   for binpath in $PATH; do
