@@ -1,7 +1,5 @@
 # CLI options
 
-source "${applicationroot}/lib/helpers.sh"
-
 help() {
   echo -e "Usage: toolbox-shortcuts create /path/to/executable_name container_name"
   exit 0
@@ -13,6 +11,9 @@ create() {
 
   [[ -z "${biname}" || -z "${containername}" ]] && help
   [[ -f "${biname}" ]] && perror "'${biname}' exists"
+
+  check_dep podman || \
+    perror "podman not found $(is_container && echo -n "(you're in ⬢ $(get_container_info name))")"
 
   podman container exists "$containername" || perror "container '${containername}' does not exist"
 
