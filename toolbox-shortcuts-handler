@@ -1,5 +1,25 @@
 #!/usr/bin/env python3
 
+"""
+
+   (c) 2022 Ruan Klein <ruan.klein@gmail.com>
+   All Rights Reserved.
+
+   toolbox-shortcuts is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   toolbox-shortcuts is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with toolbox-shortcuts. If not, see <http://www.gnu.org/licenses/>.
+
+"""
+
 from os import path, readlink
 from sys import argv
 
