@@ -33,7 +33,7 @@ $ git clone https://github.com/RuanKlein/toolbox-shortcuts.git ~/.local/opt/tool
 
 Assuming the `~/.local/bin` folder is in your `$PATH`, create symlink to cli utility:
 ```
-$ ln -s ~/.local/opt/toolbox-shortcuts/toolbox-shortcuts ~/.local/bin
+$ ln -s ~/.local/opt/toolbox-shortcuts/toolbox-shortcuts-handler ~/.local/bin/toolbox-shortcuts
 ```
 
 **NOTE**: due to how the toolbox works, the **toolbox-shortcuts** only works inside the user's folder.
