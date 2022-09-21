@@ -1,40 +1,48 @@
-#!/usr/bin/env bash
-#
-#   (c) 2022 Ruan K. F <ruan.klein@gmail.com>
-#   All Rights Reserved.
-#
-#   toolbox-shortcuts is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation, either version 3 of the License, or
-#   (at your option) any later version.
-#
-#   toolbox-shortcuts is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
-#
-#   You should have received a copy of the GNU General Public License
-#   along with toolbox-shortcuts. If not, see <http://www.gnu.org/licenses/>.
-#
+#!/usr/bin/env python3
 
-### toolbox-shortcuts-handler: executable symlinks handler to container
+"""
 
-applicationroot="$(dirname "$(readlink -f "$0")")"
+   (c) 2022 Ruan Klein <ruan.klein@gmail.com>
+   All Rights Reserved.
 
-source "${applicationroot}/lib/helpers.sh"
-source "${applicationroot}/lib/handler-functions.sh"
+   toolbox-shortcuts is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-biname="$(basename "$0")"
-containername="$(basename "$(readlink "$0")")"
-exec=run_as_container
+   toolbox-shortcuts is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-if is_container; then
-    runningcontainer="$(get_container_info name)"
-    [[ "$runningcontainer" == "$containername" ]] && exec=run_as_native
-fi
+   You should have received a copy of the GNU General Public License
+   along with toolbox-shortcuts. If not, see <http://www.gnu.org/licenses/>.
 
-if [[ "$exec" == "run_as_container" ]]; then
-  check_dep toolbox || perror "toolbox not found"
-fi
+"""
 
-$exec $*
+from os import path, readlink
+from sys import argv
+
+from lib.helpers import is_container, get_container_info
+from lib.handler import run_as_native, run_as_container, run_as_cli
+
+command = argv[0]
+
+app_root = path.dirname(path.realpath(command))
+command_name = path.basename(command)
+container_name = path.basename(
+    readlink(command)) if path.islink(command) else None
+
+args = argv[1:]
+
+if not container_name or container_name == 'toolbox-shortcuts-handler':
+    return_code = run_as_cli(app_root, args)
+    exit(return_code)
+
+if is_container():
+    running_container = get_container_info('name')
+
+    if running_container == container_name:
+        run_as_native(command_name, args)
+
+run_as_container(command_name, container_name, args)
