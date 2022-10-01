@@ -15,7 +15,7 @@ def print_error(error: str):
 
 def is_container():
     container_file = '/run/.containerenv'
-    return True if os.path.exists(container_file) else False
+    return os.path.exists(container_file)
 
 
 def get_container_info(field: str):
