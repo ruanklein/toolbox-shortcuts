@@ -2,7 +2,7 @@
 
 """
 
-   (c) 2022 Ruan Klein <ruan.klein@gmail.com>
+   (c) 2022 Ruan Klein
    All Rights Reserved.
 
    toolbox-shortcuts is free software: you can redistribute it and/or modify
@@ -20,29 +20,37 @@
 
 """
 
+from sys import argv, exit
 from os import path, readlink
-from sys import argv
 
 from lib.helpers import is_container, get_container_info
-from lib.handler import run_as_native, run_as_container, run_as_cli
+from lib.handler import run_as_cli, run_as_container, run_as_native
+
+from lib.constants import SCRIPT_HANDLER_NAME
+
+
+def start(handler, *handler_options):
+    return_code = handler(*handler_options)
+    exit(return_code)
+
 
 command = argv[0]
+args = argv[1:]
 
 app_root = path.dirname(path.realpath(command))
+
 command_name = path.basename(command)
 container_name = path.basename(
     readlink(command)) if path.islink(command) else None
 
-args = argv[1:]
 
-if not container_name or container_name == 'toolbox-shortcuts-handler':
-    return_code = run_as_cli(app_root, args)
-    exit(return_code)
+if not container_name or container_name == SCRIPT_HANDLER_NAME:
+    start(run_as_cli, app_root, args)
 
 if is_container():
     running_container = get_container_info('name')
 
     if running_container == container_name:
-        run_as_native(command_name, args)
+        start(run_as_native, command_name, args)
 
-run_as_container(command_name, container_name, args)
+start(run_as_container, command_name, container_name, args)
