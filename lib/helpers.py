@@ -2,25 +2,24 @@ import sys
 import subprocess
 import os
 
+from lib.constants import CONTAINER_FILE
 
-def run_program(exec: str):
-    return_code = subprocess.call(exec, shell=True)
-    sys.exit(return_code)
+
+def shell_run(command: str):
+    return_code = subprocess.call(command, shell=True)
+    return return_code
 
 
 def print_error(error: str):
     print(f"Error: {error}", file=sys.stderr)
-    sys.exit(1)
 
 
 def is_container():
-    container_file = '/run/.containerenv'
-    return os.path.exists(container_file)
+    return os.path.exists(CONTAINER_FILE)
 
 
 def get_container_info(field: str):
-    container_file = '/run/.containerenv'
-    with open(container_file) as f:
+    with open(CONTAINER_FILE) as f:
         for line in f:
             key, value = line.strip().split('=', 1)
             if key == field:
@@ -29,14 +28,10 @@ def get_container_info(field: str):
 
 
 def check_command_exists(command: str):
-    return_code = subprocess.call(
-        f"command -v {command} >/dev/null", shell=True)
-
-    return True if return_code == 0 else False
+    exec = shell_run(f"command -v {command} >/dev/null")
+    return exec == 0
 
 
 def check_container_exists(container_name: str):
-    return_code = subprocess.call(
-        f"podman container exists {container_name}", shell=True)
-
-    return True if return_code == 0 else False
+    exec = shell_run(f"podman container exists {container_name}")
+    return exec == 0

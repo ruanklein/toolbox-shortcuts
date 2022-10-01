@@ -1,44 +1,47 @@
 from os import path, environ, access, X_OK
 
-from lib.helpers import print_error, run_program, check_command_exists
+from lib.helpers import print_error, shell_run, check_command_exists
+from lib.constants import SCRIPT_HANDLER_NAME
 from lib import cli_options
 
 
 def run_as_native(command_name: str, args: list[str]):
     env_path = environ['PATH']
-    exec = None
+    command = None
 
-    for bin_path in env_path.split(":"):
+    for bin_path in env_path.split(':'):
         full_bin_path = f"{bin_path}/{command_name}"
 
         if path.islink(full_bin_path):
             real_binary_name = path.basename(
                 path.realpath(full_bin_path))
 
-            if real_binary_name == 'toolbox-shortcuts-handler':
+            if real_binary_name == SCRIPT_HANDLER_NAME:
                 continue
 
         if access(full_bin_path, X_OK):
-            exec = f"{full_bin_path} {' '.join(args)}"
+            command = f"{full_bin_path} {' '.join(args)}"
             break
 
-    if not exec:
+    if not command:
         print_error(f"{command_name}: command not found")
+        return 1
 
-    run_program(exec=exec)
+    return shell_run(command)
 
 
 def run_as_container(command_name: str, container_name: str, args: list[str]):
     if not check_command_exists('toolbox'):
         print_error('toolbox not found')
+        return 1
 
     pkg_managers = ['dnf', 'yum', 'apt', 'apt-get',
                     'pacman', 'zypper', 'rpm', 'dpkg']
 
     sudo = 'sudo' if command_name in pkg_managers else ''
-    exec = f"toolbox run -c {container_name} {sudo} {command_name} {' '.join(args)}"
+    command = f"toolbox run -c {container_name} {sudo} {command_name} {' '.join(args)}"
 
-    run_program(exec=exec)
+    return shell_run(command)
 
 
 def run_as_cli(app_root: str, args: list[str]):
